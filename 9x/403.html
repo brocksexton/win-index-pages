@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Denied</title>
+<link rel="stylesheet" href="https://unpkg.com/98.css@0.1.20/dist/98.css">
+
+<style>
+    /* Basic page style */
+    body {
+        background-color: #008080; /* Teal color for the Windows 98 background */
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        font-family: 'Courier New', Courier, monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Center content vertically */
+        height: 100vh; /* Full height of the viewport */
+    }
+
+    /* Container for the windows */
+    .window-container {
+        width: 80%; /* occupy 80% of the screen width */
+        max-width: 800px; /* maximum width for larger screens */
+        max-height: 90vh; /* maximum height to ensure some margin */
+        overflow-y: auto; /* scrollable if the content is too much */
+        overflow-x: hidden; /* prevent horizontal scrolling */
+    }
+
+    /* Command Prompt window style */
+    #console-window {
+        margin-bottom: 20px; /* Space between the windows */
+    }
+
+    /* Console text style */
+    #console {
+        color: lime;
+        background-color: black;
+        padding: 8px;
+        font-family: 'Courier New', Courier, monospace;
+        white-space: pre-wrap; /* wrap text and preserve spaces */
+    }
+
+    /* Internet Explorer window style */
+    #error-window {
+    }
+
+    /* Fake address bar style */
+    .fake-address-bar {
+        background-color: white;
+        padding: 2px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        margin: 4px 0;
+    }
+
+    /* Fake navigation toolbar */
+    .fake-toolbar {
+        padding: 4px;
+        display: flex;
+        gap: 4px; /* space between buttons */
+        flex-wrap: wrap; /* allow wrapping for smaller screens */
+    }
+
+    .fake-toolbar button {
+        flex: 1 1 auto; /* allow shrinking */
+        white-space: nowrap; /* prevent text inside buttons from wrapping */
+        overflow: hidden; /* prevent overflow */
+    }
+
+    /* Error message style */
+    #error-text {
+        color: red;
+        margin: 0;
+        padding: 8px;
+    }
+
+    /* Blinking cursor animation */
+    .blink {
+        animation: blink 1s steps(2, start) infinite;
+        -webkit-animation: blink 1s steps(2, start) infinite;
+    }
+    @keyframes blink {
+        to { visibility: hidden; }
+    }
+    @-webkit-keyframes blink {
+        to { visibility: hidden; }
+    }
+
+    /* Responsive design for smaller screens */
+    @media only screen and (max-width: 600px) {
+        .window-container {
+            width: 95%; /* occupy 95% of the screen width */
+        }
+        .fake-toolbar button {
+            flex: 1 0 22%; /* specify basis and disable shrinking, four buttons per row */
+            margin-bottom: 4px; /* space between wrapped items */
+        }
+        /* Hide some buttons on smaller screens for simplicity */
+        .fake-toolbar button:nth-child(n+5) { /* select all buttons from the 5th onwards */
+            display: none;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="window-container">
+
+    <!-- Command Prompt window -->
+    <div class="window" id="console-window">
+        <div class="title-bar">
+            <div class="title-bar-text">C:\WINDOWS\SYSTEM32\CMD.exe</div>
+        </div>
+        <div class="window-body">
+            <pre id="console"></pre> <!-- 'pre' tag to preserve spaces and line breaks -->
+        </div>
+    </div>
+
+    <!-- Internet Explorer error window -->
+    <div class="window" id="error-window">
+        <div class="title-bar">
+            <div class="title-bar-text">Internet Explorer</div>
+        </div>
+        <div class="window-body">
+            <!-- Fake navigation toolbar -->
+            <div class="fake-toolbar">
+                <button>&lt;</button> <!-- Back -->
+                <button>&gt;</button> <!-- Forward -->
+                <button>Refresh</button>
+                <button>Home</button>
+                <button>Search</button>
+                <button>Favorites</button>
+                <button>Help</button>
+            </div>
+            <!-- Fake address bar -->
+            <div class="fake-address-bar" id="fake-url">http://www.error.com/</div>
+            <h2 id="error-text">Error 403: Forbidden</h2> <!-- Placeholder for dynamic error code -->
+            <p>The HTTP 403 Forbidden response status code indicates that the server understands the request but refuses to authorize it.</p>
+            <p><a href="https://www.github.com/brocksexton/win-index-pages">Like this page? Get it on GitHub!</a></p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Messages to display in the command prompt
+    const messages = [
+        "Ah, it seems you're trying to enter a VIP area without the golden ticket...\n",
+        `Unfortunately, we can't grant access to "${window.location.hostname}" without proper clearance.\n`,
+        `ERROR: 403 FORBIDDEN!\n`, 
+        "If you believe you should have access, please send a polite request to:\n",
+        "sys-admin@cardiacar.rest\n"
+    ];
+
+    // Get the console and fake URL elements
+    const consoleDiv = document.getElementById('console');
+    const fakeUrlDiv = document.getElementById('fake-url');
+
+    // Set the current URL in the fake address bar
+    fakeUrlDiv.textContent = window.location.href;
+
+    // Function to print each message with a typing effect
+    function typeMessage(message, index) {
+        return new Promise((resolve, reject) => {
+            let charIndex = 0;
+            const intervalId = setInterval(() => {
+                consoleDiv.textContent += message[charIndex];
+                charIndex += 1;
+                if (charIndex === message.length) {
+                    clearInterval(intervalId);
+                    resolve();
+                }
+            }, 100); // Typing speed
+        });
+    }
+
+    // Async function to display all messages with delay
+    async function printMessages() {
+        for (let i = 0; i < messages.length; i++) {
+            await typeMessage(messages[i], i);
+        }
+        
+        // Add blinking cursor at the end
+        const cursor = document.createElement('span');
+        cursor.textContent = '_';
+        cursor.classList.add('blink');
+        consoleDiv.appendChild(cursor);
+    }
+
+    // Start the message display
+    printMessages();
+</script>
+</body>
+</html>
