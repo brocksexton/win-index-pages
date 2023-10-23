@@ -13,7 +13,7 @@ The Win98 and WinXP styled pages are created using [XP.css](https://botoxparty.g
 ## Examples
 
 - [Demo](https://cdn.cardiacar.rest/error-pages/) 
-- [Error 404 Page](https://cdn.cardiacar.rest/error-pages/404.html) styled in Win98 theme&#8203;``【oaicite:0】``&#8203;.
+- [Win9x 404 Page](https://cdn.cardiacar.rest/error-pages/404.html)
 
 ## License
 
