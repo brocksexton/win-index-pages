@@ -1,6 +1,6 @@
 # Win-Index-Pages
 
-Various pages styled around Windows themes (Error Pages, Directory Listing, etc). This project is a side project aimed at creating stylized pages reminiscent of different Windows versions. Currently, the Win98 and WinXP styles are being utilized.
+Various pages styled around Windows themes (Error Pages, Directory Listing, etc). This is a side project aimed at creating stylized pages reminiscent of different Windows versions.
 
 ## Usage
 
